@@ -1,6 +1,7 @@
 watch:
   directories:
     - src
+    - test
   fileMask: '*.php'
 phpunit:
   binaryPath: /usr/bin/php vendor/bin/phpunit
