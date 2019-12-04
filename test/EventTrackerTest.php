@@ -81,6 +81,24 @@ class EventTrackerTest extends TestCase
         $this->assertSame(12345, $this->getRequestData($container)['test']);
     }
 
+    /**
+    * @test
+    */
+    public function can_pass_eventdata()
+    {
+        $container = [];
+        $client = $this->getGuzzleClient($container);
+        $service = new EventTracker($client, 'api-key-token');
+        $eventdata = [
+            'mylist' => [1, 2, 3]
+        ];
+        $service->track(new Event('my_event', [], $eventdata), new Email('sb@domain.com'));
+        $this->assertArrayHasKey('eventdata', $this->getRequestData($container));
+        $this->assertArrayHasKey('data', $this->getRequestData($container)['eventdata']);
+        $this->assertArrayHasKey('mylist', $this->getRequestData($container)['eventdata']['data']);
+        $this->assertSame([1, 2, 3], $this->getRequestData($container)['eventdata']['data']['mylist']);
+    }
+
     private function getGuzzleClient(array &$container): Client
     {
         $history = Middleware::history($container);

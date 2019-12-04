@@ -8,10 +8,12 @@ class Event
 {
     public $name;
     public $properties = [];
+    public $eventdata = [];
 
-    public function __construct(string $name, array $properties = [])
+    public function __construct(string $name, array $properties = [], array $eventdata = [])
     {
         $this->name = $name;
         $this->properties = $properties;
+        $this->eventdata = $eventdata;
     }
 }

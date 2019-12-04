@@ -31,11 +31,20 @@ class EventTracker
         return json_encode([
             'email' => (string) $contact,
             'event' => $event->name,
-        ] + $event->properties);
+        ] + $event->properties + $this->getEventData($event));
     }
 
     private function getHeaders(): array
     {
         return ['ma-key' => $this->apiKey];
+    }
+
+    private function getEventData(Event $event): array
+    {
+        return [
+            'eventdata' => [
+                'data' => $event->eventdata,
+            ]
+        ];
     }
 }
