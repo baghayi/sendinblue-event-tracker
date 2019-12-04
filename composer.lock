@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "774bc908c3ce42e0cf44180e1b62ed49",
+    "content-hash": "f01b9b22a9ac032537c887c79620fccc",
     "packages": [
+        {
+            "name": "baghayi/php-values",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/baghayi/php-values.git",
+                "reference": "24476155e21deb64d6a031e70f5bf7f3ac5a789a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/baghayi/php-values/zipball/24476155e21deb64d6a031e70f5bf7f3ac5a789a",
+                "reference": "24476155e21deb64d6a031e70f5bf7f3ac5a789a",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Baghayi\\Value\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hüsen Baghayi",
+                    "email": "hossein.baghayi@gmail.com"
+                }
+            ],
+            "description": "Simple PHP Value Objects",
+            "time": "2019-09-21T13:46:07+00:00"
+        },
         {
             "name": "guzzlehttp/guzzle",
             "version": "6.4.1",
