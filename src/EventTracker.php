@@ -31,7 +31,7 @@ class EventTracker
         return json_encode([
             'email' => (string) $contact,
             'event' => $event->name,
-        ] + $event->properties + $this->getEventData($event));
+        ] + $this->getProperties($event) + $this->getEventData($event));
     }
 
     private function getHeaders(): array
@@ -48,6 +48,13 @@ class EventTracker
             'eventdata' => [
                 'data' => $event->eventdata,
             ]
+        ];
+    }
+
+    private function getProperties(Event $event): array
+    {
+        return [
+            'properties' => $event->properties,
         ];
     }
 }

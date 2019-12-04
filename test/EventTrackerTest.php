@@ -77,8 +77,9 @@ class EventTrackerTest extends TestCase
             'test' => 12345
         ];
         $service->track(new Event('my_event', $properties), new Email('sb@domain.com'));
-        $this->assertArrayHasKey('test', $this->getRequestData($container));
-        $this->assertSame(12345, $this->getRequestData($container)['test']);
+        $this->assertArrayHasKey('properties', $this->getRequestData($container));
+        $this->assertArrayHasKey('test', $this->getRequestData($container)['properties']);
+        $this->assertSame(12345, $this->getRequestData($container)['properties']['test']);
     }
 
     /**
