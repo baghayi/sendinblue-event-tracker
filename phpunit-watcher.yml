@@ -1,0 +1,7 @@
+watch:
+  directories:
+    - src
+  fileMask: '*.php'
+phpunit:
+  binaryPath: /usr/bin/php vendor/bin/phpunit
+  arguments: '--stop-on-failure'
