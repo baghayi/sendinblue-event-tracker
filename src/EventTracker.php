@@ -53,6 +53,9 @@ class EventTracker
 
     private function getProperties(Event $event): array
     {
+        if (empty($event->properties))
+            return [];
+
         return [
             'properties' => $event->properties,
         ];

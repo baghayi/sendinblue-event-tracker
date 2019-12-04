@@ -85,6 +85,18 @@ class EventTrackerTest extends TestCase
     /**
     * @test
     */
+    public function sends_properties_whenever_there_is_data()
+    {
+        $container = [];
+        $client = $this->getGuzzleClient($container);
+        $service = new EventTracker($client, 'api-key-token');
+        $service->track(new Event('my_event'), new Email('sb@domain.com'));
+        $this->assertArrayNotHasKey('properties', $this->getRequestData($container));
+    }
+
+    /**
+    * @test
+    */
     public function can_pass_eventdata()
     {
         $container = [];
