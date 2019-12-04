@@ -30,34 +30,11 @@ class EventTracker
     {
         return json_encode([
             'email' => (string) $contact,
-            'event' => $event->name,
-        ] + $this->getProperties($event) + $this->getEventData($event));
+        ] + $event->toArray());
     }
 
     private function getHeaders(): array
     {
         return ['ma-key' => $this->apiKey];
-    }
-
-    private function getEventData(Event $event): array
-    {
-        if (empty($event->eventdata))
-            return [];
-
-        return [
-            'eventdata' => [
-                'data' => $event->eventdata,
-            ]
-        ];
-    }
-
-    private function getProperties(Event $event): array
-    {
-        if (empty($event->properties))
-            return [];
-
-        return [
-            'properties' => $event->properties,
-        ];
     }
 }
