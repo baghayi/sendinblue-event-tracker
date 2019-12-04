@@ -22,10 +22,20 @@ class EventTracker
 
     public function track(string $event, Email $contact)
     {
-        $request = new Request('POST', self::EVENT_TRACKER_URI, ['ma-key' => $this->apiKey], json_encode([
+        $request = new Request('POST', self::EVENT_TRACKER_URI, $this->getHeaders(), $this->getData($contact, $event));
+        $this->http->send($request);
+    }
+
+    private function getData(Email $contact, string $event): string
+    {
+        return json_encode([
             'email' => (string) $contact,
             'event' => $event,
-        ]));
-        $this->http->send($request);
+        ]);
+    }
+
+    private function getHeaders(): array
+    {
+        return ['ma-key' => $this->apiKey];
     }
 }
