@@ -20,18 +20,18 @@ class EventTracker
         $this->apiKey = $apiKey;
     }
 
-    public function track(string $event, Email $contact)
+    public function track(Event $event, Email $contact)
     {
         $request = new Request('POST', self::EVENT_TRACKER_URI, $this->getHeaders(), $this->getData($contact, $event));
         $this->http->send($request);
     }
 
-    private function getData(Email $contact, string $event): string
+    private function getData(Email $contact, Event $event): string
     {
         return json_encode([
             'email' => (string) $contact,
-            'event' => $event,
-        ]);
+            'event' => $event->name,
+        ] + $event->properties);
     }
 
     private function getHeaders(): array

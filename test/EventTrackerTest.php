@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Test;
 
+use Baghayi\Sendinblue\Event;
 use Baghayi\Sendinblue\EventTracker;
 use Baghayi\Value\Email;
 use GuzzleHttp\Client;
@@ -31,7 +32,7 @@ class EventTrackerTest extends TestCase
         $container = [];
         $client = $this->getGuzzleClient($container);
         $service = new EventTracker($client, 'api-key');
-        $service->track('my_event', new Email('sb@domain.com'));
+        $service->track(new Event('my_event'), new Email('sb@domain.com'));
 
         $data = $this->getRequestData($container);
         $this->assertSame('sb@domain.com', $data['email']);
@@ -46,7 +47,7 @@ class EventTrackerTest extends TestCase
         $container = [];
         $client = $this->getGuzzleClient($container);
         $service = new EventTracker($client, 'api-key');
-        $service->track('my_event', new Email('sb@domain.com'));
+        $service->track(new Event('my_event'), new Email('sb@domain.com'));
         $this->assertSame('POST', $container[0]['request']->getMethod());
         $this->assertSame('https://in-automate.sendinblue.com/api/v2/trackEvent', (string) $container[0]['request']->getUri());
     }
@@ -59,9 +60,25 @@ class EventTrackerTest extends TestCase
         $container = [];
         $client = $this->getGuzzleClient($container);
         $service = new EventTracker($client, 'api-key-token');
-        $service->track('my_event', new Email('sb@domain.com'));
+        $service->track(new Event('my_event'), new Email('sb@domain.com'));
         $this->assertArrayHasKey('ma-key', $container[0]['request']->getHeaders());
         $this->assertContains('api-key-token', $container[0]['request']->getHeaders()['ma-key']);
+    }
+
+    /**
+    * @test
+    */
+    public function can_send_properties_along_the_request()
+    {
+        $container = [];
+        $client = $this->getGuzzleClient($container);
+        $service = new EventTracker($client, 'api-key-token');
+        $properties = [
+            'test' => 12345
+        ];
+        $service->track(new Event('my_event', $properties), new Email('sb@domain.com'));
+        $this->assertArrayHasKey('test', $this->getRequestData($container));
+        $this->assertSame(12345, $this->getRequestData($container)['test']);
     }
 
     private function getGuzzleClient(array &$container): Client
