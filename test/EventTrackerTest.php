@@ -38,6 +38,19 @@ class EventTrackerTest extends TestCase
         $this->assertSame('my_event', $data['event']);
     }
 
+    /**
+    * @test
+    */
+    public function posts_data_to_appropriate_api()
+    {
+        $container = [];
+        $client = $this->getGuzzleClient($container);
+        $service = new EventTracker($client);
+        $service->track('my_event', new Email('sb@domain.com'));
+        $this->assertSame('POST', $container[0]['request']->getMethod());
+        $this->assertSame('https://in-automate.sendinblue.com/api/v2/trackEvent', (string) $container[0]['request']->getUri());
+    }
+
     private function getGuzzleClient(array &$container): Client
     {
         $history = Middleware::history($container);

@@ -10,7 +10,7 @@ use GuzzleHttp\Psr7\Request;
 
 class EventTracker
 {
-    const EVENT_TRACKER_URI = 'http://xyz.com/xyz';
+    const EVENT_TRACKER_URI = 'https://in-automate.sendinblue.com/api/v2/trackEvent';
     private $http;
 
     public function __construct(Client $http)
@@ -20,7 +20,7 @@ class EventTracker
 
     public function track(string $event, Email $contact)
     {
-        $request = new Request('GET', self::EVENT_TRACKER_URI, [], json_encode([
+        $request = new Request('POST', self::EVENT_TRACKER_URI, [], json_encode([
             'email' => (string) $contact,
             'event' => $event,
         ]));
