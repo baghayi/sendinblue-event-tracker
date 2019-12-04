@@ -30,7 +30,7 @@ class EventTrackerTest extends TestCase
     {
         $container = [];
         $client = $this->getGuzzleClient($container);
-        $service = new EventTracker($client);
+        $service = new EventTracker($client, 'api-key');
         $service->track('my_event', new Email('sb@domain.com'));
 
         $data = $this->getRequestData($container);
@@ -45,10 +45,23 @@ class EventTrackerTest extends TestCase
     {
         $container = [];
         $client = $this->getGuzzleClient($container);
-        $service = new EventTracker($client);
+        $service = new EventTracker($client, 'api-key');
         $service->track('my_event', new Email('sb@domain.com'));
         $this->assertSame('POST', $container[0]['request']->getMethod());
         $this->assertSame('https://in-automate.sendinblue.com/api/v2/trackEvent', (string) $container[0]['request']->getUri());
+    }
+
+    /**
+    * @test
+    */
+    public function need_to_authorize_for_our_request_to_get_processed()
+    {
+        $container = [];
+        $client = $this->getGuzzleClient($container);
+        $service = new EventTracker($client, 'api-key-token');
+        $service->track('my_event', new Email('sb@domain.com'));
+        $this->assertArrayHasKey('ma-key', $container[0]['request']->getHeaders());
+        $this->assertContains('api-key-token', $container[0]['request']->getHeaders()['ma-key']);
     }
 
     private function getGuzzleClient(array &$container): Client
