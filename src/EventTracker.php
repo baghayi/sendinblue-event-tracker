@@ -41,6 +41,9 @@ class EventTracker
 
     private function getEventData(Event $event): array
     {
+        if (empty($event->eventdata))
+            return [];
+
         return [
             'eventdata' => [
                 'data' => $event->eventdata,
