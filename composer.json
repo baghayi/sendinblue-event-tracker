@@ -11,8 +11,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "guzzlehttp/guzzle": "~6.4",
-        "baghayi/php-values": "^1.1.0"
+        "baghayi/php-values": "^1.1.0",
+        "guzzlehttp/guzzle": "~6.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~8.4",
